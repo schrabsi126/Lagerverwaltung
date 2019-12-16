@@ -1,0 +1,61 @@
+<h2>Buchung</h2>
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let component"> {{component.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let component"> {{component.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="part_number">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nummer </th>
+      <td mat-cell *matCellDef="let component"> {{component.part_number}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let component; columns: displayedColumns;"
+        (click)="getComp(component)"
+        (click)="selection.toggle(component)"
+        [ngClass]="{ highlighted: selection.isSelected(component)}">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+<mat-form-field [formGroup]="entryForm">
+  <mat-label> Lager</mat-label>
+  <mat-select matNativeControl id="storage" formControlName="storage">
+    <mat-option *ngFor="let storage of storages" [value]="storage.id">{{storage.name}}</mat-option>
+  </mat-select>
+  <mat-error *ngIf="entryForm.get('storage').hasError('required')">
+    Ein Lager ist verlangt
+  </mat-error>
+</mat-form-field>
+<mat-form-field [formGroup]="entryForm">
+  <input matInput type="number" placeholder="Anzahl" id="number" formControlName="number">
+  <mat-error *ngIf="entryForm.get('number').hasError('required')">
+    Eine Anzahl ist verlangt
+  </mat-error>
+</mat-form-field>
+<mat-form-field [formGroup]="entryForm">
+  <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  <mat-error *ngIf="entryForm.get('date').hasError('required')">
+    Ein Datum ist verlangt
+  </mat-error>
+</mat-form-field>
+<button mat-raised-button (click)="addEntry()" [disabled]="!(entryForm.valid&&selctedComponent!=null)" routerLink="/about">
+  Buchung abschließen
+</button>

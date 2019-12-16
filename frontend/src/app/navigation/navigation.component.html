@@ -1,0 +1,41 @@
+<mat-drawer-container class="app-sidenav-container" autosize>
+  <mat-drawer #drawer class="app-sidenav mat-elevation-z10"
+              [mode]="isScreenSmall()? 'over':'side'"
+              [opened]="!isScreenSmall()">
+    <mat-nav-list>
+      <mat-toolbar color="primary">Menü</mat-toolbar>
+      <mat-list-item routerLink="/user" >
+        user
+      </mat-list-item>
+      <mat-list-item routerLink="/about" >
+        about
+      </mat-list-item>
+      <mat-list-item routerLink="/entry" >
+        Buchung
+      </mat-list-item>
+      <mat-list-item routerLink="/components" >
+        Komponenten
+      </mat-list-item>
+      <mat-list-item routerLink="/delivery" >
+        Lieferung
+      </mat-list-item>
+      <mat-list-item (click)="logout()" routerLink="/login" >
+        logout
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <div class="app-sidenav-content">
+    <mat-toolbar color="primary">
+
+      <button mat-button class="sidenav-toggle" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="title-span">Lagerverwaltung</span>
+    </mat-toolbar>
+    <div class="wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</mat-drawer-container>

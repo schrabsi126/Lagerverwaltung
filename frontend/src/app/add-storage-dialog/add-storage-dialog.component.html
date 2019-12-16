@@ -1,0 +1,21 @@
+<div class="align-content-center">
+  <h1 mat-dialog-title>Lager erstellen</h1>
+  <div mat-dialog-content>
+    <mat-form-field [formGroup]="storageForm">
+      <input matInput type="text" placeholder="Name" id="name" formControlName="name">
+      <mat-error *ngIf="storageForm.get('name').hasError('required')">
+        Ein Name ist verlangt
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [formGroup]="storageForm">
+      <input matInput type="text" placeholder="Addresse" id="location" formControlName="location">
+      <mat-error *ngIf="storageForm.get('location').hasError('required')">
+        Eine Addresse ist verlangt
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="submit" [disabled]="!storageForm.valid" (click)="createStorage()">Erstellen</button>
+    <button mat-button (click)="cancel()">Abbrechen</button>
+  </div>
+</div>
