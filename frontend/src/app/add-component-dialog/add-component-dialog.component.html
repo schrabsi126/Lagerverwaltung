@@ -1,0 +1,59 @@
+<div class="align-content-center">
+  <h1 mat-dialog-title>Kategorie erstellen</h1>
+  <div mat-dialog-content>
+    <mat-form-field [formGroup]="componentForm">
+      <input matInput type="text" placeholder="Name" id="name" formControlName="name">
+      <mat-error *ngIf="componentForm.get('name').hasError('required')">
+        Ein Name ist verlangt
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [formGroup]="componentForm">
+      <input matInput type="number" placeholder="Preis" id="price" formControlName="price">
+      <mat-error *ngIf="componentForm.get('price').hasError('required')">
+        Ein Preis ist verlangt
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [formGroup]="componentForm">
+      <input matInput type="text" placeholder="Part_nummer" id="part_number" formControlName="part_number">
+      <mat-error *ngIf="componentForm.get('part_number').hasError('required')">
+        Ein Partnummer ist verlangt
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [formGroup]="componentForm">
+      <mat-label> Status</mat-label>
+      <mat-select matNativeControl id="state" formControlName="state">
+        <mat-option value="aktiv">aktiv</mat-option>
+        <mat-option value="gesperrt">gesperrt</mat-option>
+      </mat-select>
+      <mat-error *ngIf="componentForm.get('state').hasError('required')">
+        Ein Status ist verlangt
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [formGroup]="componentForm">
+      <input matInput type="number" placeholder="VP_unit" id="VP_unit" formControlName="VP_unit">
+      <mat-error *ngIf="componentForm.get('VP_unit').hasError('required')">
+        Ein VP_einheit ist verlangt
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [formGroup]="componentForm">
+      <textarea matInput type="text" placeholder="Beschreibung" id="description" formControlName="description"></textarea>
+      <mat-error *ngIf="componentForm.get('description').hasError('required')">
+        Ein Beschreibung ist verlangt
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [formGroup]="componentForm">
+      <mat-label> Kategorie</mat-label>
+      <mat-select matNativeControl id="category" formControlName="category">
+        <mat-option *ngFor="let category of categories" [value]="category.id">{{category.short_name}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="componentForm.get('category').hasError('required')">
+        Eine Kategorie ist verlangt
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="submit" [disabled]="!componentForm.valid" (click)="createComponent()">Erstellen</button>
+    <button mat-button (click)="cancel()">Abbrechen</button>
+  </div>
+</div>
+
