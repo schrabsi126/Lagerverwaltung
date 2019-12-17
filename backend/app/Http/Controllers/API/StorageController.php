@@ -44,6 +44,17 @@ class StorageController extends Controller
             }
             array_push($callculations,$temp);
         }
+        $deliveries=$storage->ToStorage();
+        foreach ($deliveries as $delivery)
+        {
+            $shifts=$delivery->StorageShifts();
+            foreach ($shifts as $shift)
+            {
+
+            }
+        }
+        array_push($callculations,$temp);
+
         $storage['entries']=$callculations;
         return response()->json($storage);
     }
