@@ -8,7 +8,6 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { AppRoutingModule }     from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { AboutComponent } from './about/about.component';
 import { RegisterComponent } from './register/register.component';
 import { RegisterService } from "./services/register.service";
 import { UserService } from "./services/user.service";
@@ -44,7 +43,6 @@ import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    AboutComponent,
     RegisterComponent,
     NavigationComponent,
     ShowUserComponent,

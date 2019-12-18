@@ -19,6 +19,13 @@ export class StorageService {
       .catch(this.handleError)
   }
 
+  getStorage(id) {
+    let url = this.environmentService.setApiServiceById('storage',id);
+    return this.http.get<Storage>(url)
+      .map(res => res)
+      .catch(this.handleError)
+  }
+
   private handleError(error: Response | any) {
     let errMsg: string;
     const body = error.json() || '';

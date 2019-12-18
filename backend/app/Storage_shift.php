@@ -14,6 +14,6 @@ class Storage_shift extends Model
     }
     public function Component()
     {
-        return $this->belongsTo('App\Component');
+        return $this->belongsTo('App\Component')->get();
     }
 }

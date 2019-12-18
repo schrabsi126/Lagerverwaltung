@@ -1,3 +1,29 @@
+<mat-form-field [formGroup]="deliveryForm">
+  <mat-label> Ausgangslager</mat-label>
+  <mat-select matNativeControl id="from" formControlName="from" (ngModelChange)="updateToStorages($event)">
+    <mat-option *ngFor="let storage of fromStorages" [value]="storage.id">{{storage.name}}</mat-option>
+  </mat-select>
+  <mat-error *ngIf="deliveryForm.get('from').hasError('required')">
+    Ein Ausgangslager ist verlangt
+  </mat-error>
+</mat-form-field>
+<mat-form-field [formGroup]="deliveryForm">
+  <mat-label> Ziellager</mat-label>
+  <mat-select matNativeControl id="to" formControlName="to">
+    <mat-option *ngFor="let storage of toStorages" [value]="storage.id">{{storage.name}}</mat-option>
+  </mat-select>
+  <mat-error *ngIf="deliveryForm.get('to').hasError('required')">
+    Ein Ziellager ist verlangt
+  </mat-error>
+</mat-form-field>
+<mat-form-field [formGroup]="deliveryForm">
+  <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  <mat-error *ngIf="deliveryForm.get('date').hasError('required')">
+    Ein Datum ist verlangt
+  </mat-error>
+</mat-form-field>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Checkbox Column -->
@@ -27,40 +53,16 @@
     <td mat-cell *matCellDef="let component"> {{component.part_number}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="number">
+    <th mat-header-cell *matHeaderCellDef > Anzahl </th>
+    <td mat-cell *matCellDef="let component"> {{component.number}} </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"
       (click)="selection.toggle(row)">
   </tr>
 </table>
-
-
-<mat-form-field [formGroup]="deliveryForm">
-  <mat-label> Lager</mat-label>
-  <mat-select matNativeControl id="from" formControlName="from">
-    <mat-option *ngFor="let storage of storages" [value]="storage.id">{{storage.name}}</mat-option>
-  </mat-select>
-  <mat-error *ngIf="deliveryForm.get('from').hasError('required')">
-    Ein Ausgangslager ist verlangt
-  </mat-error>
-</mat-form-field>
-<mat-form-field [formGroup]="deliveryForm">
-  <mat-label> Lager</mat-label>
-  <mat-select matNativeControl id="to" formControlName="to">
-    <mat-option *ngFor="let storage of storages" [value]="storage.id">{{storage.name}}</mat-option>
-  </mat-select>
-  <mat-error *ngIf="deliveryForm.get('to').hasError('required')">
-    Ein Ziellager ist verlangt
-  </mat-error>
-</mat-form-field>
-<mat-form-field [formGroup]="deliveryForm">
-  <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-  <mat-error *ngIf="deliveryForm.get('date').hasError('required')">
-    Ein Datum ist verlangt
-  </mat-error>
-</mat-form-field>
-
 <div *ngIf="selection.hasValue()" id="shifts">
 <mat-card *ngFor="let component of selection.selected" style="margin-bottom: 1%">
   <span>{{component.name}}</span>
@@ -69,6 +71,6 @@
   </mat-form-field>
 </mat-card>
 </div>
-<button mat-raised-button (click)="addDelivery()" [disabled]="!(deliveryForm.valid&&checkShifts)" routerLink="/components">
+<button mat-raised-button style="margin-top: 1%" (click)="addDelivery()" [disabled]="!(deliveryForm.valid&&checkShifts)" routerLink="/components">
   Lieferung abschließen
 </button>

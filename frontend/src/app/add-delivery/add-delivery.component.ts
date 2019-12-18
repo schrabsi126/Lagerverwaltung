@@ -21,26 +21,59 @@ export class AddDeliveryComponent implements OnInit {
 
   pipe = new DatePipe('en-US');
   delivery:Delivery;
+  selectedStorage:Storage;
   storageShifts:StorageShift[]=[];
-  storages:Storage[];
-  displayedColumns: string[] = ['select','id', 'name', 'part_number'];
+  toStorages:Storage[]=[];
+  fromStorages:Storage[]=[];
+  displayedColumns: string[] = ['select','id', 'name', 'part_number','number'];
   dataSource: MatTableDataSource<ComponentModel>;
   deliveryForm:FormGroup;
-
+  checkShifts:boolean=false;
+  selection = new SelectionModel<ComponentModel>(true, []);
   components:ComponentModel[];
-  constructor(private componentService:ComponentService, private storageService:StorageService, private deliveryService:DeliveryService,
+
+  constructor( private storageService:StorageService, private deliveryService:DeliveryService,
               private storageShiftService:StorageShiftService) {
+  }
+
+  updateToStorages(event)
+  {
+    this.storageService.getStorage(event).subscribe(x=>{
+      this.selectedStorage=x;
+      this.components=[];
+      for (let i=0; i<this.selectedStorage.components.length;i++)
+      {
+        let component:ComponentModel=this.selectedStorage.components[i].component;
+        component.number=this.selectedStorage.components[i].sum;
+        this.components.push(component)
+      }
+      this.selection = new SelectionModel<ComponentModel>(true, []);
+      this.dataSource = new MatTableDataSource(this.components);
+    });
+    this.toStorages= [];
+    for (let i=0; i<this.fromStorages.length;i++)
+    {
+        this.toStorages.push(this.fromStorages[i])
+    }
+    let from_id=event;
+    let index=5;
+    for (let i=0; i<this.toStorages.length;i++)
+    {
+
+      if(this.toStorages[i].id==from_id)
+      {
+        index=i;
+      }
+    }
+    this.toStorages.splice(index,1);
   }
 
   ngOnInit() {
     this.delivery= new Delivery();
     this.delivery.date=(new Date()).toISOString();
     this.storageService.getStorages().subscribe(storages => {
-      this.storages=storages;
-    });
-    this.componentService.getComponents().subscribe(components => {
-      this.components=components;
-      this.dataSource = new MatTableDataSource(this.components);
+      this.toStorages=storages;
+      this.fromStorages=this.toStorages.slice();
     });
 
     this.deliveryForm = new FormGroup({
@@ -49,8 +82,6 @@ export class AddDeliveryComponent implements OnInit {
       'to': new FormControl(this.delivery.to_id,[Validators.required]),
     });
   }
-  checkShifts:boolean=false;
-  selection = new SelectionModel<ComponentModel>(true, []);
 
   updateCheckShifts() {
     if(!this.selection.selected)
@@ -69,8 +100,18 @@ export class AddDeliveryComponent implements OnInit {
           this.checkShifts=false;
           return;
         }
+      if(this.selectedStorage)
+      {
+        for (let x=0;x<this.selectedStorage.components.length;x++)
+        {
+          if(this.selectedStorage.components[x].component_id==this.selection.selected[i].id && this.selection.selected[i].numberForDelivery>this.selectedStorage.components[x].sum)
+          {
+            this.checkShifts=false;
+            return ;
+          }
+        }
+      }
     }
-
     this.checkShifts=true;
   }
 

@@ -25,6 +25,7 @@ Route::group(['middleware' => ['cors','auth:api']], function () {
     Route::post('category','API\CategoryController@store');
     Route::get('storages','API\StorageController@index');
     Route::post('storage','API\StorageController@store');
+    Route::get('storage/{id}','API\StorageController@show');
     Route::get('entries','API\EntryController@index');
     Route::post('entry','API\EntryController@store');
     Route::get('deliveries','API\DeliveryController@index');
@@ -33,4 +34,3 @@ Route::group(['middleware' => ['cors','auth:api']], function () {
     Route::post('storageShift','API\StorageShiftController@store');
     Route::post('storageShifts','API\StorageShiftController@storeRange');
 });
-Route::get('storage/{id}','API\StorageController@show');

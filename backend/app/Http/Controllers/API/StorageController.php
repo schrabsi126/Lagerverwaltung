@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Component;
 use App\Entry;
 use App\Storage;
 use Illuminate\Http\Request;
@@ -22,14 +23,17 @@ class StorageController extends Controller
         foreach ($entries as $entry)
         {
             $sum=0;
+            $component_id='';
             $component='';
             foreach ($entry as $com)
             {
                 $sum+=$com->number;
-                $component=$com->component_id;
+                $component_id=$com->component_id;
+                $component=$com->Component();
             }
             $temp['sum']=$sum;
-            $temp['component_id']=$component;
+            $temp['component_id']=$component_id;
+            $temp['component']=$component->first();
             $deliveries=$storage->ToStorage();
             foreach ($deliveries as $delivery)
             {
@@ -42,20 +46,47 @@ class StorageController extends Controller
                         }
                 }
             }
+            $deliveriesfrom=$storage->FromStorage();
+            foreach ($deliveriesfrom as $delivery)
+            {
+                $shiftsfrom=$delivery->StorageShifts();
+                foreach ($shiftsfrom as $shift)
+                {
+                    if($temp['component_id']==$shift['component_id'])
+                    {
+                        $temp['sum']-=$shift['number'];
+                    }
+                }
+            }
             array_push($callculations,$temp);
         }
-        $deliveries=$storage->ToStorage();
         foreach ($deliveries as $delivery)
         {
             $shifts=$delivery->StorageShifts();
             foreach ($shifts as $shift)
             {
-
+                if(!collect($callculations)->contains('component_id', $shift->component_id))
+                {
+                    $temp['sum']=$shift['number'];
+                    $temp['component_id']=$shift['component_id'];
+                    $temp['component']= $shift->Component()->first();
+                    $deliveriesfrom=$storage->FromStorage();
+                    foreach ($deliveriesfrom as $delivery)
+                    {
+                        $shiftsfrom=$delivery->StorageShifts();
+                        foreach ($shiftsfrom as $shiftform)
+                        {
+                            if($temp['component_id']==$shiftform['component_id'])
+                            {
+                                $temp['sum']-=$shiftform['number'];
+                            }
+                        }
+                    }
+                    array_push($callculations, $temp);
+                }
             }
         }
-        array_push($callculations,$temp);
-
-        $storage['entries']=$callculations;
+        $storage['components']=collect($callculations);
         return response()->json($storage);
     }
 
