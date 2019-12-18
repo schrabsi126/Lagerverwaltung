@@ -2,7 +2,7 @@
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
 
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" style="margin-bottom: 1%">
   <table mat-table [dataSource]="dataSource" matSort>
 
     <!-- ID Column -->
@@ -30,4 +30,4 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
-
+<button mat-flat-button color="primary" routerLink="/register">User hinzufügen</button>

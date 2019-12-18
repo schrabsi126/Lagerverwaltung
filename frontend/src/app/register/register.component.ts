@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
 	  this.registerService.register(this.registerData)
     .subscribe((value) => {
       this.spinnerService.hide();
-      this.router.navigate(['login']);
+      this.router.navigate(['user']);
     }, err => {
       this.spinnerService.hide();
       if (err.status_code == 422) {

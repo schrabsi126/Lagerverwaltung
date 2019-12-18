@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'entry', canActivate: [ ProtectedGuard ], component: AddEntryComponent },
   { path: 'delivery', canActivate: [ ProtectedGuard ], component: AddDeliveryComponent },
   { path: 'components', canActivate: [ ProtectedGuard ], component: ShowComponentsComponent },
-  { path: 'register', canActivate: [ PublicGuard ], component: RegisterComponent },
+  { path: 'register', canActivate: [ ProtectedGuard ], component: RegisterComponent },
   { path: '**', pathMatch: 'full', redirectTo: '/' } // catch any unfound routes and redirect to home page
 ];
 

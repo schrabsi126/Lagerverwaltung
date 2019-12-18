@@ -37,6 +37,8 @@ import {StorageService} from './services/storage.service';
 import {EntryService} from './services/entry.service';
 import { AddEntryComponent } from './add-entry/add-entry.component';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
+import { ShowSingleComponentComponent } from './show-single-component/show-single-component.component';
+import { ShowStorageComponent } from './show-storage/show-storage.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
     AddComponentDialogComponent,
     AddStorageDialogComponent,
     AddEntryComponent,
-    AddDeliveryComponent
+    AddDeliveryComponent,
+    ShowSingleComponentComponent,
+    ShowStorageComponent
   ],
     imports: [
         BrowserModule,
