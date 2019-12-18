@@ -11,6 +11,8 @@ import {Delivery} from '../models/delivery';
 import {DeliveryService} from '../services/delivery.service';
 import {StorageShift} from '../models/storage-shift';
 import {StorageShiftService} from '../services/storage-shift.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-add-delivery',
@@ -31,6 +33,8 @@ export class AddDeliveryComponent implements OnInit {
   checkShifts:boolean=false;
   selection = new SelectionModel<ComponentModel>(true, []);
   components:ComponentModel[];
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor( private storageService:StorageService, private deliveryService:DeliveryService,
               private storageShiftService:StorageShiftService) {
@@ -49,6 +53,8 @@ export class AddDeliveryComponent implements OnInit {
       }
       this.selection = new SelectionModel<ComponentModel>(true, []);
       this.dataSource = new MatTableDataSource(this.components);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
     this.toStorages= [];
     for (let i=0; i<this.fromStorages.length;i++)
@@ -81,6 +87,14 @@ export class AddDeliveryComponent implements OnInit {
       'from': new FormControl(this.delivery.from_id,[Validators.required]),
       'to': new FormControl(this.delivery.to_id,[Validators.required]),
     });
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   updateCheckShifts() {
