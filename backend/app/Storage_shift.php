@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Storage_shift extends Model
 {
@@ -10,10 +11,11 @@ class Storage_shift extends Model
 
     public function Delivery()
     {
-        return $this->belongsTo('App\Delivery');
+        return $this->belongsTo('App\Delivery')->get();
     }
     public function Component()
     {
         return $this->belongsTo('App\Component')->get();
     }
+
 }

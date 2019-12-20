@@ -10,11 +10,16 @@ class Component extends Model
 
     public function Category()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsTo('App\Category')->get();
     }
 
     public function Entries()
     {
         return $this->hasMany('App\Entry')->get();
+    }
+
+    public  function StorageShifts()
+    {
+        return $this->hasMany('App\Storage_shift')->get();
     }
 }

@@ -10,11 +10,11 @@ class Entry extends Model
 
     public function User()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->get();
     }
     public function Storage()
     {
-        return $this->belongsTo('App\Storage');
+        return $this->belongsTo('App\Storage')->get();
     }
     public function Component()
     {

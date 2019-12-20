@@ -60,6 +60,7 @@ class StorageController extends Controller
             }
             array_push($callculations,$temp);
         }
+        $deliveries=$storage->ToStorage();
         foreach ($deliveries as $delivery)
         {
             $shifts=$delivery->StorageShifts();
