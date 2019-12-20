@@ -49,6 +49,13 @@ export class ComponentService {
     });
   }
 
+  getComponent(id) {
+    let url = this.environmentService.setApiServiceById('component',id);
+    return this.http.get<ComponentModel>(url)
+      .map(res => res)
+      .catch(this.handleError)
+  }
+
   private dataStore: { components: ComponentModel[] };
   private _components: BehaviorSubject<ComponentModel[]>;
 
@@ -70,5 +77,6 @@ export class ComponentService {
   get components():Observable<ComponentModel[]>{
     return this._components.asObservable();
   }
+
 
 }

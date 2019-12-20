@@ -1,3 +1,6 @@
+import {Entry} from './entry';
+import {StorageShift} from './storage-shift';
+
 export class ComponentModel {
   id:number;
   name:string;
@@ -9,4 +12,9 @@ export class ComponentModel {
   category_id:number;
   number:number;
   numberForDelivery:number;
+  category:string;
+  entries:Entry[];
+  shifts:StorageShift[];
+  storages:{count:number; storage:string, storage_id:number}[];
+
 }

@@ -22,7 +22,7 @@ import {
     MatListModule,
     MatMenuModule, MatNativeDateModule, MatOptionModule, MatPaginatorModule, MatSelectModule,
     MatSidenavModule, MatSortModule,
-    MatTableModule,
+    MatTableModule, MatTabsModule,
     MatToolbarModule
 } from '@angular/material';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -83,7 +83,8 @@ import { ShowStorageComponent } from './show-storage/show-storage.component';
         MatSelectModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatCardModule
+        MatCardModule,
+        MatTabsModule
     ],
   providers: [
     MatDatepickerModule,

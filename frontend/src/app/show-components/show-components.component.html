@@ -31,7 +31,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let component; columns: displayedColumns;">
+    <tr mat-row *matRowDef="let component; columns: displayedColumns;"
+        [routerLink]="[component.id]">
     </tr>
   </table>
 

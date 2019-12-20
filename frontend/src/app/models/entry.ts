@@ -5,4 +5,6 @@ export class Entry {
   storage_id:number;
   component_id:number;
   date:string;
+  user:string;
+  storage:string;
 }
