@@ -33,5 +33,5 @@ Route::group(['middleware' => ['cors','auth:api']], function () {
     Route::get('storageShifts','API\StorageShiftController@index');
     Route::post('storageShift','API\StorageShiftController@store');
     Route::post('storageShifts','API\StorageShiftController@storeRange');
+    Route::get('component/{id}','API\ComponentController@show');
 });
-Route::get('component/{id}','API\ComponentController@show');
